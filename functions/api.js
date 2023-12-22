@@ -2,31 +2,32 @@ const express = require("express");
 const serverless = require("serverless-http");
 const app = express();
 const port = 3000;
+const router = express.Router();
 
-app.get("/", (req, res) => {
+router.get("/", (req, res) => {
   res.send("Hello World!");
 });
-app.get("/test", (req, res) => {
+router.get("/test", (req, res) => {
   res.send("Hello World222!");
 });
 
 //Create new record
-app.post("/add", (req, res) => {
+router.post("/add", (req, res) => {
   res.send("New record added.");
 });
 
 //delete existing record
-app.delete("/", (req, res) => {
+router.delete("/", (req, res) => {
   res.send("Deleted existing record");
 });
 
 //updating existing record
-app.put("/", (req, res) => {
+router.put("/", (req, res) => {
   res.send("Updating existing record");
 });
 
 //showing demo records
-app.get("/demo", (req, res) => {
+router.get("/demo", (req, res) => {
   res.json([
     {
       id: "001",
@@ -45,7 +46,7 @@ app.get("/demo", (req, res) => {
     },
   ]);
 });
-app.use("/.netlify/functions/api", app);
+app.use("/.netlify/functions/api", router);
 module.exports.handler = serverless(app);
 // app.listen(port, () => {
 //   console.log(`Example app listening on port ${port}`);
