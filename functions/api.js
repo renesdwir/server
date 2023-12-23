@@ -1,53 +1,11 @@
+require("dotenv").config();
 const express = require("express");
 const serverless = require("serverless-http");
 const app = express();
-const port = 3000;
-const router = express.Router();
+app.use(express.json());
 
-router.get("/", (req, res) => {
-  res.send("Hello World!");
-});
-router.get("/test", (req, res) => {
-  res.send("Hello World222!");
-});
-
-//Create new record
-router.post("/add", (req, res) => {
-  res.send("New record added.");
-});
-
-//delete existing record
-router.delete("/", (req, res) => {
-  res.send("Deleted existing record");
-});
-
-//updating existing record
-router.put("/", (req, res) => {
-  res.send("Updating existing record");
-});
-
-//showing demo records
-router.get("/demo", (req, res) => {
-  res.json([
-    {
-      id: "001",
-      name: "Smith",
-      email: "smith@gmail.com",
-    },
-    {
-      id: "002",
-      name: "Sam",
-      email: "sam@gmail.com",
-    },
-    {
-      id: "003",
-      name: "lily",
-      email: "lily@gmail.com",
-    },
-  ]);
-});
-app.use("/.netlify/functions/api", router);
+const carController = require("../app/car/car.controller");
+const orderController = require("../app/order/order.controller");
+app.use("/.netlify/functions/api/cars", carController);
+app.use("/.netlify/functions/api/orders", orderController);
 module.exports.handler = serverless(app);
-// app.listen(port, () => {
-//   console.log(`Example app listening on port ${port}`);
-// });
