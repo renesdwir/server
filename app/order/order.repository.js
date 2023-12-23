@@ -1,7 +1,9 @@
 const prisma = require("../../db");
 
 const findOrders = async () => {
-  const orders = await prisma.order.findMany();
+  const orders = await prisma.order.findMany({
+    include: { car: true },
+  });
   return orders;
 };
 const findOrderById = async (id) => {
